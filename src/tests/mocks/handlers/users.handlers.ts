@@ -5,7 +5,7 @@ import type { PaginatedResponse } from '@/types/api.types';
 const MOCK_USERS: User[] = [
   { id: 'u1', name: 'Alex Rivera', email: 'alex.rivera@meridian.io', role: 'admin', department: 'Engineering', status: 'active', avatarUrl: 'https://i.pravatar.cc/150?u=u1', joinedAt: '2022-03-15T00:00:00Z', manager: null },
   { id: 'u2', name: 'Morgan Chen', email: 'morgan.chen@meridian.io', role: 'manager', department: 'Product', status: 'active', avatarUrl: 'https://i.pravatar.cc/150?u=u2', joinedAt: '2021-07-20T00:00:00Z', manager: 'Alex Rivera' },
-  { id: 'u3', name: 'Sam Taylor', email: 'sam.taylor@meridian.io', role: 'employee', department: 'Design', status: 'active', avatarUrl: 'https://i.pravatar.cc/150?u=u3', joinedAt: '2023-01-10T00:00:00Z', manager: 'Morgan Chen' },
+  { id: 'u3', name: 'Gokul Pathak', email: 'gokul-pathak@meridian.io', role: 'employee', department: 'Engineering', status: 'active', avatarUrl: 'https://avatars.githubusercontent.com/gokul-pathak', joinedAt: '2023-01-10T00:00:00Z', manager: 'Morgan Chen' },
   { id: 'u4', name: 'Jordan Liu', email: 'jordan.liu@meridian.io', role: 'employee', department: 'Engineering', status: 'active', avatarUrl: null, joinedAt: '2023-11-05T00:00:00Z', manager: 'Alex Rivera' },
   { id: 'u5', name: 'Casey Kim', email: 'casey.kim@meridian.io', role: 'employee', department: 'Design', status: 'active', avatarUrl: 'https://i.pravatar.cc/150?u=u5', joinedAt: '2022-08-01T00:00:00Z', manager: 'Morgan Chen' },
   { id: 'u6', name: 'Riley Park', email: 'riley.park@meridian.io', role: 'employee', department: 'Finance', status: 'inactive', avatarUrl: null, joinedAt: '2020-04-12T00:00:00Z', manager: 'Alex Rivera' },
