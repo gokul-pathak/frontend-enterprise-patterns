@@ -16,13 +16,11 @@ body {
   font-family: var(--font-inter);
 }
 
-/* Remove outline only for mouse users; keyboard users still get focus rings */
-:focus:not(:focus-visible) {
-  outline: none;
-}
-
-:focus-visible {
-  outline: 2px solid var(--mui-palette-primary-main, #4f46e5);
-  outline-offset: 2px;
-  border-radius: 4px;
+/* Prevent Tailwind preflight from applying double outlines to MUI inputs */
+input:focus, 
+textarea:focus, 
+select:focus,
+.MuiInputBase-input:focus {
+  outline: none !important;
+  box-shadow: none !important;
 }

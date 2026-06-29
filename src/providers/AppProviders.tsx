@@ -4,9 +4,12 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
-import { useMemo } from 'react';
+import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import { useMemo, useEffect, useState } from 'react';
 
-import { store, useAppSelector } from '@/store';
+import { store, useAppSelector, useAppDispatch } from '@/store';
+import { initTheme } from '@/store/themeSlice';
+import { initNotes } from '@/store/notesSlice';
 import { queryClient } from '@/lib/queryClient';
 import { GlobalSnackbar } from '@/shared/components/Snackbar';
 import { NextAuthProvider } from './NextAuthProvider';
@@ -24,12 +27,14 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
     <ReduxProvider store={store}>
       <NextAuthProvider>
         <QueryClientProvider client={queryClient}>
-        <MuiThemeProvider>
-          <CssBaseline />
-          {children}
-          <GlobalSnackbar />
-        </MuiThemeProvider>
-        {process.env.NODE_ENV === 'development' && (
+          <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+            <MuiThemeProvider>
+              <CssBaseline />
+              {children}
+              <GlobalSnackbar />
+            </MuiThemeProvider>
+          </AppRouterCacheProvider>
+          {process.env.NODE_ENV === 'development' && (
           <ReactQueryDevtools initialIsOpen={false} />
         )}
       </QueryClientProvider>
@@ -43,7 +48,15 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
  * Creates a MUI theme based on the Redux theme slice.
  */
 function MuiThemeProvider({ children }: { children: React.ReactNode }) {
+  const dispatch = useAppDispatch();
   const mode = useAppSelector((state) => state.theme.mode);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    dispatch(initTheme());
+    dispatch(initNotes());
+    setMounted(true);
+  }, [dispatch]);
 
   const theme = useMemo(
     () =>
@@ -86,5 +99,14 @@ function MuiThemeProvider({ children }: { children: React.ReactNode }) {
     [mode],
   );
 
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
+  // Prevent hydration mismatch by rendering a hidden/invisible app until theme loads,
+  // or just render using the default (server) theme and swap immediately after mount.
+  // We'll let it swap to avoid a blank screen, but MUI handles this reasonably well.
+  return (
+    <ThemeProvider theme={theme}>
+      <div style={{ visibility: mounted ? 'visible' : 'hidden' }}>
+        {children}
+      </div>
+    </ThemeProvider>
+  );
 }
