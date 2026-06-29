@@ -25,8 +25,8 @@ export function DashboardPage() {
     <div>
       <PageHeader
         title="Dashboard"
-        description="Your organization's pulse at a glance."
-        breadcrumbs={[{ label: 'Meridian' }, { label: 'Dashboard' }]}
+        description="Your GitHub pulse at a glance."
+        breadcrumbs={[{ label: 'GitHub Stats' }, { label: 'Dashboard' }]}
       />
 
       <Grid container spacing={3} sx={{ mb: 4 }}>

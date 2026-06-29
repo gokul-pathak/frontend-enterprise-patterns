@@ -7,6 +7,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import LogoutIcon from '@mui/icons-material/Logout';
+import NoteIcon from '@mui/icons-material/Note';
+import SettingsIcon from '@mui/icons-material/Settings';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { signOut, useSession } from 'next-auth/react';
@@ -20,8 +22,10 @@ const DRAWER_WIDTH = 240;
 
 const NAV_ITEMS = [
   { label: 'Dashboard', href: '/dashboard', icon: <DashboardIcon /> },
-  { label: 'People', href: '/users', icon: <PeopleIcon /> },
+  { label: 'Connections', href: '/users', icon: <PeopleIcon /> },
   { label: 'My Profile', href: '/profile', icon: <PersonIcon /> },
+  { label: 'Notes', href: '/notes', icon: <NoteIcon /> },
+  { label: 'Settings', href: '#', icon: <SettingsIcon /> },
 ];
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -55,8 +59,8 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
         }}
       >
         <Toolbar sx={{ px: 2 }}>
-          <Typography variant="h6" sx={{ fontWeight: 800, color: "primary.main", letterSpacing: "-0.02em" }}>
-            Meridian
+          <Typography variant="h6" noWrap sx={{ fontWeight: 700, letterSpacing: '-0.5px' }}>
+            GitHub Stats
           </Typography>
         </Toolbar>
         <Divider />

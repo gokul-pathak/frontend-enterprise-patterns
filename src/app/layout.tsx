@@ -8,23 +8,23 @@ const inter = Inter({ subsets: ['latin'], variable: '--font-inter' });
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL ?? 'http://localhost:3000'),
   title: {
-    default: 'Meridian — People Operations Platform',
-    template: '%s | Meridian',
+    default: 'GitHub Stats',
+    template: '%s | GitHub Stats',
   },
   description:
-    'Meridian is an internal HR and People Operations platform for managing your organization\'s team members, performance, and growth.',
+    'GitHub Stats is a platform for viewing GitHub activity.',
   keywords: ['HR', 'people operations', 'team management', 'performance'],
-  authors: [{ name: 'Meridian Engineering' }],
+  authors: [{ name: 'GitHub Stats Engineering' }],
   openGraph: {
     type: 'website',
-    siteName: 'Meridian',
-    title: 'Meridian — People Operations Platform',
-    description: 'Manage your organization\'s team with Meridian.',
+    siteName: 'GitHub Stats',
+    title: 'GitHub Stats',
+    description: 'View your GitHub stats.',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Meridian — People Operations Platform',
-    description: 'Manage your organization\'s team with Meridian.',
+    title: 'GitHub Stats',
+    description: 'View your GitHub stats.',
   },
   robots: {
     index: false, // Internal tool — don't index

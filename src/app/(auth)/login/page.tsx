@@ -4,7 +4,7 @@ import { LoginForm } from '@/features/auth/components/LoginForm';
 
 export const metadata: Metadata = {
   title: 'Sign In',
-  description: 'Sign in to your Meridian account to access the People Operations platform.',
+  description: 'Sign in to your GitHub Stats account to access the People Operations platform.',
   robots: { index: false, follow: false },
 };
 
@@ -40,7 +40,7 @@ export default function LoginPage() {
             variant="h4"
             sx={{ fontWeight: 800, letterSpacing: '-0.02em', color: 'primary.main' }}
           >
-            Meridian
+            GitHub Stats
           </Typography>
           <Typography variant="body2" color="text.secondary" sx={{ mt: 1 }}>
             Sign in to your workspace
