@@ -19,7 +19,7 @@ export const authOptions: NextAuthOptions = {
         token.accessToken = account.access_token;
       }
       if (profile && 'login' in profile) {
-        token.username = profile.login; // GitHub username
+        token.username = profile.login as string; // GitHub username
       }
       return token;
     },

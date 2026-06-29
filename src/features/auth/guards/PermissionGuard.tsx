@@ -1,6 +1,6 @@
 'use client';
 
-import { useAppSelector } from '@/store';
+import { useSession } from 'next-auth/react';
 import type { UserRole } from '../types/auth.types';
 
 interface PermissionGuardProps {
@@ -26,9 +26,13 @@ export function PermissionGuard({
   allowedRoles,
   fallback = null,
 }: PermissionGuardProps) {
-  const user = useAppSelector((state) => state.auth.user);
+  const { data: session } = useSession();
+  
+  // For portfolio purposes, all GitHub OAuth users are granted 'admin' access
+  // so they can see all UI elements.
+  const userRole: UserRole = session?.user ? 'admin' : 'employee';
 
-  if (!user || !allowedRoles.includes(user.role)) {
+  if (!session?.user || !allowedRoles.includes(userRole)) {
     return <>{fallback}</>;
   }
 

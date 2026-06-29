@@ -27,8 +27,8 @@ export async function getUsers(params: UsersQueryParams): Promise<PaginatedRespo
       department: 'Engineering', // Placeholder for demonstration
       status: 'active',
       avatarUrl: item.avatar_url,
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
+      joinedAt: new Date().toISOString(),
+      manager: null,
     })),
     pagination: {
       page: params.page,
@@ -49,8 +49,8 @@ export async function getUserById(id: string): Promise<User> {
     department: 'Engineering',
     status: 'active',
     avatarUrl: data.avatar_url,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    joinedAt: new Date().toISOString(),
+    manager: null,
   };
 }
 
@@ -60,14 +60,15 @@ export async function createUser(payload: CreateUserPayload): Promise<User> {
     id: Date.now().toString(),
     ...payload,
     avatarUrl: null,
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    joinedAt: new Date().toISOString(),
+    manager: null,
+    status: 'active',
   };
 }
 
 export async function updateUser(id: string, payload: UpdateUserPayload): Promise<User> {
   const existing = await getUserById(id);
-  return { ...existing, ...payload, updatedAt: new Date().toISOString() };
+  return { ...existing, ...payload };
 }
 
 export async function deleteUser(id: string): Promise<void> {

@@ -86,13 +86,13 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
         </List>
         <Divider />
         <Box sx={{ p: 2, display: 'flex', alignItems: 'center', gap: 1.5 }}>
-          {user && <Avatar name={user.name} src={user.avatarUrl} size={32} />}
+          {user && <Avatar name={user.name || 'User'} src={user.image} size={32} />}
           <Box sx={{ flex: 1, minWidth: 0 }}>
             <Typography variant="body2" sx={{ fontWeight: 600 }} noWrap>
-              {user?.name}
+              {user?.name || 'GitHub User'}
             </Typography>
             <Typography variant="caption" color="text.secondary" noWrap>
-              {user?.role}
+              GitHub Member
             </Typography>
           </Box>
         </Box>

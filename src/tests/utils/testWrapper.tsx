@@ -4,7 +4,6 @@ import { configureStore } from '@reduxjs/toolkit';
 import type { PropsWithChildren } from 'react';
 import { vi } from 'vitest';
 
-import authReducer from '@/store/authSlice';
 import themeReducer from '@/store/themeSlice';
 import notificationsReducer from '@/store/notificationsSlice';
 
@@ -17,7 +16,6 @@ vi.mock('next/navigation', () => ({
 export function createWrapper() {
   const testStore = configureStore({
     reducer: {
-      auth: authReducer,
       theme: themeReducer,
       notifications: notificationsReducer,
     },
