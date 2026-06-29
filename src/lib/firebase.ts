@@ -47,12 +47,14 @@ function getFirebaseMessaging(): Messaging | null {
  * that are not triggered by user interaction.
  */
 export async function requestNotificationPermission(): Promise<string | null> {
-  const messaging = getFirebaseMessaging();
-  if (!messaging) return null;
-
   try {
+    // Request permission first so the browser prompt always appears,
+    // even if Firebase isn't configured with env vars yet.
     const permission = await Notification.requestPermission();
     if (permission !== 'granted') return null;
+
+    const messaging = getFirebaseMessaging();
+    if (!messaging) return null;
 
     const token = await getToken(messaging, {
       vapidKey: process.env.NEXT_PUBLIC_FIREBASE_VAPID_KEY,

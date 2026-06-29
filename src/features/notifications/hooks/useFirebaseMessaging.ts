@@ -20,18 +20,23 @@ export function useFirebaseMessaging() {
 
   const enableNotifications = useCallback(async () => {
     const token = await requestNotificationPermission();
-    if (!token) return;
-
-    // Register token with backend
-    // The backend stores this token against the user's account for push delivery
-    try {
-      await apiClient.post('/push/register', { token, platform: 'web' });
+    
+    // Even if token generation fails (e.g. Firebase not configured),
+    // we still want the demo UI to reflect the granted permission.
+    if (Notification.permission === 'granted') {
+      if (token) {
+        // Register token with backend
+        try {
+          await apiClient.post('/push/register', { token, platform: 'web' });
+        } catch {
+          // Non-fatal — the app works without push
+        }
+      }
+      
       dispatch(enqueueNotification({
-        message: 'Push notifications enabled.',
+        message: token ? 'Push notifications enabled.' : 'Notification permission granted (Firebase not configured).',
         severity: 'success',
       }));
-    } catch {
-      // Non-fatal — the app works without push
     }
   }, [dispatch]);
 
