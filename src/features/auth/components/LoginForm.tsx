@@ -14,6 +14,15 @@ export function LoginForm() {
     await signIn('github', { callbackUrl: '/dashboard' });
   };
 
+  const handleDemoLogin = async () => {
+    setIsLoading(true);
+    await signIn('credentials', { 
+      username: 'admin', 
+      password: 'password', 
+      callbackUrl: '/dashboard' 
+    });
+  };
+
   return (
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 3 }}>
       <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', mb: 2 }}>
@@ -38,6 +47,21 @@ export function LoginForm() {
         }}
       >
         Sign in with GitHub
+      </Button>
+
+      <Typography variant="body2" color="text.secondary" sx={{ textAlign: 'center' }}>
+        Don't want to set up GitHub OAuth right now?
+      </Typography>
+
+      <Button
+        id="demo-login-submit"
+        variant="outlined"
+        fullWidth
+        size="large"
+        onClick={handleDemoLogin}
+        disabled={isLoading}
+      >
+        Sign in with Demo Account
       </Button>
     </Box>
   );
