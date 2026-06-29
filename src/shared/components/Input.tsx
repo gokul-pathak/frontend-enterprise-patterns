@@ -19,6 +19,8 @@ type InputProps = TextFieldProps & {
  */
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ errorMessage, ...props }, ref) => {
+    // MUI TextField automatically assigns aria-describedby and aria-invalid 
+    // when 'error' and 'helperText' are provided, ensuring WCAG compliance natively.
     return (
       <TextField
         inputRef={ref}

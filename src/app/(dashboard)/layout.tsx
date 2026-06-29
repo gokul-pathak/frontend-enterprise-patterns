@@ -15,6 +15,7 @@ import { signOut, useSession } from 'next-auth/react';
 
 import { AuthGuard } from '@/features/auth';
 import { Avatar } from '@/shared/components/Avatar';
+import { SkipToContent } from '@/shared/components/SkipToContent';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { toggleTheme } from '@/store/themeSlice';
 
@@ -45,6 +46,7 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
 
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+      <SkipToContent />
       <Drawer
         variant="permanent"
         sx={{
@@ -126,7 +128,7 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
           </Toolbar>
         </AppBar>
 
-        <Box component="main" sx={{ flex: 1, p: 3, bgcolor: 'background.default' }}>
+        <Box id="main-content" component="main" sx={{ flex: 1, p: 3, bgcolor: 'background.default' }}>
           {children}
         </Box>
       </Box>
