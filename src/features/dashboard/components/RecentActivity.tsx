@@ -29,6 +29,7 @@ export function RecentActivity({ items }: RecentActivityProps) {
             <Avatar name={item.userName} src={item.userAvatar} size={36} />
           </ListItemAvatar>
           <ListItemText
+            disableTypography
             primary={
               <Box sx={{ display: 'flex', alignItems: 'center', gap: 1, flexWrap: 'wrap' }}>
                 <Typography variant="body2" sx={{ fontWeight: 600 }}>
