@@ -1,23 +1,33 @@
 'use client';
 
-import { Grid, Card, CardContent, Typography, Alert } from '@mui/material';
+import { Grid, Card, CardContent, Typography, Alert, Box } from '@mui/material';
+import { Button } from '@/shared/components/Button';
 
 import { PageHeader } from '@/shared/components/PageHeader';
 import { StatsCard } from './StatsCard';
-import { RecentActivity } from './RecentActivity';
 import { DashboardSkeleton } from './DashboardSkeleton';
 import { useDashboardData } from '../hooks/useDashboardData';
+import dynamic from 'next/dynamic';
+
+const RecentActivity = dynamic(() => import('./RecentActivity').then(mod => mod.RecentActivity), {
+  loading: () => <DashboardSkeleton />,
+});
 
 export function DashboardPage() {
-  const { data, isLoading, isError } = useDashboardData();
+  const { data, isLoading, isError, refetch } = useDashboardData();
 
   if (isLoading) return <DashboardSkeleton />;
 
   if (isError) {
     return (
-      <Alert severity="error" sx={{ mt: 2 }}>
-        Failed to load dashboard data. Please refresh the page.
-      </Alert>
+      <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 2 }}>
+        <Alert severity="error" sx={{ width: '100%' }}>
+          Failed to load dashboard data. Please check your connection.
+        </Alert>
+        <Button variant="outlined" onClick={() => refetch()}>
+          Retry Request
+        </Button>
+      </Box>
     );
   }
 
