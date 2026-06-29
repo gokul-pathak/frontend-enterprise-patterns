@@ -60,6 +60,14 @@ apiClient.interceptors.response.use(
       _retry?: boolean;
     };
 
+    // Do not intercept 401s from login or refresh endpoints
+    if (
+      originalRequest.url?.includes('/auth/login') ||
+      originalRequest.url?.includes('/auth/refresh')
+    ) {
+      return Promise.reject(error);
+    }
+
     // Only attempt refresh on 401, and only once per request
     if (error.response?.status !== 401 || originalRequest._retry) {
       return Promise.reject(error);
