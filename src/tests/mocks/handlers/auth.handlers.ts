@@ -17,13 +17,13 @@ const USERS_DB: Record<string, { id: string; name: string; email: string; role: 
     department: 'Product',
     avatarUrl: 'https://i.pravatar.cc/150?u=manager',
   },
-  'employee@meridian.io': {
-    id: 'user-3',
-    name: 'Sam Taylor',
-    email: 'employee@meridian.io',
+  'gokul-pathak@meridian.io': {
+    id: 'u3',
+    name: 'Gokul Pathak',
+    email: 'gokul-pathak@meridian.io',
     role: 'employee',
-    department: 'Design',
-    avatarUrl: 'https://i.pravatar.cc/150?u=employee',
+    department: 'Engineering',
+    avatarUrl: 'https://avatars.githubusercontent.com/gokul-pathak',
   },
 };
 
@@ -52,7 +52,7 @@ export const authHandlers = [
       user,
       tokens: {
         accessToken: createMockJwt(user),
-        refreshToken: `mock-refresh-${user.id}-${Date.now()}`,
+        refreshToken: `mock-refresh|${user.id}|${Date.now()}`,
       },
     });
   }),
@@ -63,7 +63,7 @@ export const authHandlers = [
 
   http.post('/api/auth/refresh', async ({ request }) => {
     const body = (await request.json()) as { refreshToken: string };
-    const userId = body.refreshToken.split('-')[2];
+    const userId = body.refreshToken.split('|')[1];
     const user = Object.values(USERS_DB).find((u) => u.id === userId);
 
     if (!user) {

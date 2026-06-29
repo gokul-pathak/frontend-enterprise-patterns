@@ -103,7 +103,7 @@ export function LoginForm() {
         {[
           { email: 'admin@meridian.io', password: 'password123', role: 'Admin' },
           { email: 'manager@meridian.io', password: 'password123', role: 'Manager' },
-          { email: 'employee@meridian.io', password: 'password123', role: 'Employee' },
+          { email: 'gokul-pathak@meridian.io', password: 'password123', role: 'Gokul' },
         ].map(({ email, password, role }) => (
           <Button
             key={role}
