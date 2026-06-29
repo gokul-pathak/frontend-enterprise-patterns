@@ -31,60 +31,20 @@ export interface GitHubUserProfile {
   };
 }
 
-const GET_GITHUB_USER = `
-  query GetGitHubUser($login: String!) {
-    user(login: $login) {
-      login
-      name
-      bio
-      avatarUrl
-      followers {
-        totalCount
-      }
-      following {
-        totalCount
-      }
-      repositories(privacy: PUBLIC) {
-        totalCount
-      }
-      contributionsCollection {
-        totalCommitContributions
-        totalPullRequestContributions
-      }
-    }
-  }
-`;
-
 export async function getGitHubUserProfile(
   login: string,
 ): Promise<GitHubUserProfile | null> {
-  const token = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
-
-  const headers: Record<string, string> = {
-    'Content-Type': 'application/json',
-  };
-
-  if (token) {
-    headers['Authorization'] = `Bearer ${token}`;
-  }
-
   try {
-    const response = await fetch(GITHUB_GRAPHQL_URL, {
-      method: 'POST',
-      headers,
-      body: JSON.stringify({ query: GET_GITHUB_USER, variables: { login } }),
-    });
+    const response = await fetch(`/api/github/profile?login=${encodeURIComponent(login)}`);
 
-    if (!response.ok) throw new Error('GitHub API error');
-
-    const json = (await response.json()) as { data?: { user: GitHubUserProfile | null }; message?: string };
-    
-    // GitHub API sometimes returns 200 OK with a rate limit message in the body
-    if (json.message && json.message.includes('rate limit')) {
-      throw new Error('Rate limit exceeded');
+    if (!response.ok) {
+      throw new Error('API route error');
     }
 
-    return json.data?.user ?? null;
+    const json = (await response.json()) as { user?: GitHubUserProfile | null };
+    return json.user ?? null;
+
+
   } catch (error) {
     console.warn('GitHub API failed (likely rate limit or missing token). Falling back to mock data.', error);
     // Graceful fallback for portfolio/demo purposes
