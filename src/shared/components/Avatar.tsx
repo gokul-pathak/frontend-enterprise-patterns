@@ -2,6 +2,7 @@
 
 import MuiAvatar, { AvatarProps as MuiAvatarProps } from '@mui/material/Avatar';
 import { Tooltip } from '@mui/material';
+import Image from 'next/image';
 
 interface AvatarProps extends Omit<MuiAvatarProps, 'src'> {
   name: string;
@@ -47,7 +48,17 @@ export function Avatar({ name, src, size = 36, showTooltip = false, sx, ...props
       }}
       {...props}
     >
-      {!src && getInitials(name)}
+      {src ? (
+        <Image
+          src={src}
+          alt={name}
+          width={size}
+          height={size}
+          style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+        />
+      ) : (
+        getInitials(name)
+      )}
     </MuiAvatar>
   );
 

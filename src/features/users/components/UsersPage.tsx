@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useMemo, useCallback } from 'react';
 import {
   Box,
   Card,
@@ -29,7 +29,11 @@ export function UsersPage() {
     first: 50,
   });
 
-  const columns: GridColDef<GitHubConnection>[] = [
+  const handleCloseModal = useCallback(() => {
+    setSelectedConnection(null);
+  }, []);
+
+  const columns: GridColDef<GitHubConnection>[] = useMemo(() => [
     {
       field: 'name',
       headerName: 'User',
@@ -87,7 +91,7 @@ export function UsersPage() {
         </Button>
       ),
     },
-  ];
+  ], []);
 
   return (
     <div>
@@ -132,7 +136,7 @@ export function UsersPage() {
       <ConnectionDetailModal
         connection={selectedConnection}
         open={Boolean(selectedConnection)}
-        onClose={() => setSelectedConnection(null)}
+        onClose={handleCloseModal}
       />
     </div>
   );
