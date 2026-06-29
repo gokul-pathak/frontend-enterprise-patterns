@@ -11,8 +11,6 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
 import { AuthGuard } from '@/features/auth';
-import { useLogout } from '@/features/auth/hooks/useLogout';
-import { NotificationBell } from '@/features/notifications/components/NotificationBell';
 import { Avatar } from '@/shared/components/Avatar';
 import { useAppDispatch, useAppSelector } from '@/store';
 import { toggleTheme } from '@/store/themeSlice';
@@ -38,7 +36,6 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
   const dispatch = useAppDispatch();
   const { mode } = useAppSelector((state) => state.theme);
   const user = useAppSelector((state) => state.auth.user);
-  const logout = useLogout();
 
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
@@ -107,7 +104,6 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
           sx={{ borderBottom: '1px solid', borderColor: 'divider' }}
         >
           <Toolbar sx={{ gap: 1, justifyContent: 'flex-end' }}>
-            <NotificationBell />
             <IconButton
               onClick={() => dispatch(toggleTheme())}
               aria-label={`Switch to ${mode === 'dark' ? 'light' : 'dark'} mode`}
@@ -115,7 +111,7 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
               {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>
             <IconButton
-              onClick={() => logout.mutate()}
+              onClick={() => console.log('logout')}
               aria-label="Sign out"
               id="logout-button"
             >
