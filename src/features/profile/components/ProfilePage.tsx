@@ -1,20 +1,28 @@
 'use client';
 
+import { useEffect } from 'react';
 import { Box, Skeleton, Alert, Typography } from '@mui/material';
 
 import { PageHeader } from '@/shared/components/PageHeader';
 import { Avatar } from '@/shared/components/Avatar';
 import { ProfileForm } from './ProfileForm';
-import { useProfile } from '../hooks/useProfile';
-import { useUpdateProfile } from '../hooks/useUpdateProfile';
+import { useAppDispatch, useAppSelector } from '@/store';
+import { fetchProfile, saveProfile } from '@/store/profileSlice';
 import type { ProfileFormValues } from '../schemas/profileSchema';
 
 export function ProfilePage() {
-  const { data: profile, isLoading, isError } = useProfile();
-  const { mutate: saveProfile, isPending } = useUpdateProfile();
+  const dispatch = useAppDispatch();
+  const { data: profile, isLoading, isSaving, error: isError } = useAppSelector((state) => state.profile);
+
+  useEffect(() => {
+    // Only fetch if we don't have data, or if you want to always refetch on mount.
+    if (!profile) {
+      dispatch(fetchProfile());
+    }
+  }, [dispatch, profile]);
 
   function handleSubmit(values: ProfileFormValues) {
-    saveProfile(values);
+    dispatch(saveProfile(values));
   }
 
   return (
@@ -22,7 +30,7 @@ export function ProfilePage() {
       <PageHeader
         title="My Profile"
         description="Update your personal information and preferences."
-        breadcrumbs={[{ label: 'Meridian' }, { label: 'Profile' }]}
+        breadcrumbs={[{ label: 'GitHub Stats' }, { label: 'Profile' }]}
       />
 
       {isError && (
@@ -66,7 +74,7 @@ export function ProfilePage() {
           <ProfileForm
             defaultValues={profile}
             onSubmit={handleSubmit}
-            isSubmitting={isPending}
+            isSubmitting={isSaving}
           />
         )
       )}
