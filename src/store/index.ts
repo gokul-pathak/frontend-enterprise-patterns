@@ -3,11 +3,15 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 import themeReducer from './themeSlice';
 import notificationsReducer from './notificationsSlice';
+import profileReducer from './profileSlice';
+import notesReducer from './notesSlice';
 
 export const store = configureStore({
   reducer: {
     theme: themeReducer,
     notifications: notificationsReducer,
+    profile: profileReducer,
+    notes: notesReducer,
   },
 });
 
