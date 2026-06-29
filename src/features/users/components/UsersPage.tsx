@@ -81,11 +81,11 @@ export function UsersPage() {
       renderCell: (params) => (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
           <Avatar name={params.row.name} src={params.row.avatarUrl} size={32} />
-          <Box>
-            <Typography variant="body2" sx={{ fontWeight: 500 }}>
+          <Box sx={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+            <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: 1.2, mb: 0.5 }} noWrap>
               {params.row.name}
             </Typography>
-            <Typography variant="caption" color="text.secondary">
+            <Typography variant="caption" color="text.secondary" sx={{ lineHeight: 1.2 }} noWrap>
               {params.row.email}
             </Typography>
           </Box>
