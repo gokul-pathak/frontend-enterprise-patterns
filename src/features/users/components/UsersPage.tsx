@@ -16,7 +16,12 @@ import {
   CircularProgress,
 } from '@mui/material';
 import { DataGrid, type GridColDef, type GridPaginationModel } from '@mui/x-data-grid';
-import { Search as SearchIcon, DeleteOutlined as DeleteIcon, Person as PersonIcon, Add as AddIcon } from '@mui/icons-material';
+import {
+  Search as SearchIcon,
+  DeleteOutlined as DeleteIcon,
+  Person as PersonIcon,
+  Add as AddIcon,
+} from '@mui/icons-material';
 
 import { PageHeader } from '@/shared/components/PageHeader';
 import { Button } from '@/shared/components/Button';
@@ -106,8 +111,8 @@ export function UsersPage() {
             params.value === 'admin'
               ? 'primary'
               : params.value === 'manager'
-              ? 'secondary'
-              : 'default'
+                ? 'secondary'
+                : 'default'
           }
         />
       ),
@@ -124,8 +129,8 @@ export function UsersPage() {
             params.value === 'active'
               ? 'success'
               : params.value === 'inactive'
-              ? 'error'
-              : 'warning'
+                ? 'error'
+                : 'warning'
           }
         />
       ),
@@ -133,7 +138,7 @@ export function UsersPage() {
     {
       field: 'actions',
       headerName: '',
-      width: 120,
+      width: 180,
       sortable: false,
       renderCell: (params) => (
         <Box sx={{ display: 'flex', gap: 0.5 }}>
