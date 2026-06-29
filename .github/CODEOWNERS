@@ -1,0 +1,8 @@
+# Default: all changes require at least one frontend team approval
+* @meridian/frontend
+
+# Auth flow — security-sensitive, requires two reviewers
+src/features/auth/ @meridian/frontend @meridian/security
+
+# CI/CD configuration
+.github/ @meridian/platform
