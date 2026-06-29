@@ -1,123 +1,44 @@
 'use client';
 
-import { useForm, Controller } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Box, Typography, Divider, Alert } from '@mui/material';
-import { Input } from '@/shared/components/Input';
+import { Box, Typography } from '@mui/material';
+import { signIn } from 'next-auth/react';
 import { Button } from '@/shared/components/Button';
-import { loginSchema, type LoginFormValues } from '../schemas/loginSchema';
-import { useLogin } from '../hooks/useLogin';
+import GitHubIcon from '@mui/icons-material/GitHub';
+import { useState } from 'react';
 
 export function LoginForm() {
-  const login = useLogin();
+  const [isLoading, setIsLoading] = useState(false);
 
-  const {
-    control,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: '',
-      password: '',
-    },
-  });
+  const handleGitHubLogin = async () => {
+    setIsLoading(true);
+    await signIn('github', { callbackUrl: '/dashboard' });
+  };
 
   return (
-    <Box
-      component="form"
-      onSubmit={handleSubmit((values) => login.mutate(values))}
-      noValidate
-      sx={{ width: '100%' }}
-    >
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 3, mb: 3 }}>
-        <Controller
-          name="email"
-          control={control}
-          render={({ field }) => (
-            <Input
-              {...field}
-              id="email"
-              label="Email address"
-              type="email"
-              autoComplete="email"
-              required
-              errorMessage={errors.email?.message}
-              slotProps={{
-                htmlInput: {
-                  'aria-required': 'true',
-                  'aria-describedby': errors.email ? 'email-error' : undefined,
-                },
-              }}
-            />
-          )}
-        />
-        <Controller
-          name="password"
-          control={control}
-          render={({ field }) => (
-            <Input
-              {...field}
-              id="password"
-              label="Password"
-              type="password"
-              autoComplete="current-password"
-              required
-              errorMessage={errors.password?.message}
-              slotProps={{
-                htmlInput: {
-                  'aria-required': 'true',
-                  'aria-describedby': errors.password ? 'password-error' : undefined,
-                },
-              }}
-            />
-          )}
-        />
-      </Box>
-
-      {login.isError && (
-        <Alert severity="error" sx={{ mb: 2 }} role="alert">
-          Invalid email or password.
-        </Alert>
-      )}
+    <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 3 }}>
+      <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', mb: 2 }}>
+        Sign in with your GitHub account to access the dashboard and view your real GitHub statistics.
+      </Typography>
 
       <Button
-        id="login-submit"
-        type="submit"
+        id="github-login-submit"
         variant="contained"
         fullWidth
         size="large"
-        isLoading={login.isPending}
-        loadingText="Signing in…"
+        startIcon={<GitHubIcon />}
+        onClick={handleGitHubLogin}
+        isLoading={isLoading}
+        loadingText="Redirecting to GitHub…"
+        sx={{
+          backgroundColor: '#24292e',
+          color: '#ffffff',
+          '&:hover': {
+            backgroundColor: '#1b1f23',
+          },
+        }}
       >
-        Sign in
+        Sign in with GitHub
       </Button>
-
-      <Divider sx={{ my: 3 }}>
-        <Typography variant="caption" color="text.secondary">
-          Demo credentials
-        </Typography>
-      </Divider>
-
-      <Box sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-        {[
-          { email: 'admin@meridian.io', password: 'password123', role: 'Admin' },
-          { email: 'manager@meridian.io', password: 'password123', role: 'Manager' },
-          { email: 'gokul-pathak@meridian.io', password: 'password123', role: 'Gokul' },
-        ].map(({ email, password, role }) => (
-          <Button
-            key={role}
-            type="button"
-            variant="outlined"
-            size="small"
-            fullWidth
-            onClick={() => login.mutate({ email, password })}
-            disabled={login.isPending}
-          >
-            Sign in as {role}
-          </Button>
-        ))}
-      </Box>
     </Box>
   );
 }

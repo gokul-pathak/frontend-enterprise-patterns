@@ -9,6 +9,7 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import LogoutIcon from '@mui/icons-material/Logout';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { signOut, useSession } from 'next-auth/react';
 
 import { AuthGuard } from '@/features/auth';
 import { Avatar } from '@/shared/components/Avatar';
@@ -35,7 +36,8 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const dispatch = useAppDispatch();
   const { mode } = useAppSelector((state) => state.theme);
-  const user = useAppSelector((state) => state.auth.user);
+  const { data: session } = useSession();
+  const user = session?.user;
 
   return (
     <Box sx={{ display: 'flex', minHeight: '100vh' }}>
@@ -111,7 +113,7 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
               {mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
             </IconButton>
             <IconButton
-              onClick={() => console.log('logout')}
+              onClick={() => signOut({ callbackUrl: '/login' })}
               aria-label="Sign out"
               id="logout-button"
             >

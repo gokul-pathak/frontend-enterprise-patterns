@@ -9,6 +9,7 @@ import { useMemo } from 'react';
 import { store, useAppSelector } from '@/store';
 import { queryClient } from '@/lib/queryClient';
 import { GlobalSnackbar } from '@/shared/components/Snackbar';
+import { NextAuthProvider } from './NextAuthProvider';
 
 /**
  * Composition root for all app-wide providers.
@@ -21,7 +22,8 @@ import { GlobalSnackbar } from '@/shared/components/Snackbar';
 export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <ReduxProvider store={store}>
-      <QueryClientProvider client={queryClient}>
+      <NextAuthProvider>
+        <QueryClientProvider client={queryClient}>
         <MuiThemeProvider>
           <CssBaseline />
           {children}
@@ -31,6 +33,7 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
           <ReactQueryDevtools initialIsOpen={false} />
         )}
       </QueryClientProvider>
+      </NextAuthProvider>
     </ReduxProvider>
   );
 }
