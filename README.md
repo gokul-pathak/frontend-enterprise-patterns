@@ -1,6 +1,6 @@
-# Meridian - Enterprise Frontend Architecture Portfolio
+# GitHub Stats - Enterprise Frontend Architecture Portfolio
 
-Meridian is a production-ready Next.js application designed to demonstrate senior-level frontend engineering practices, scalable architecture, and modern toolchains.
+GitHub Stats is a production-ready Next.js application designed to demonstrate senior-level frontend engineering practices, scalable architecture, and modern toolchains.
 
 This project is not a typical mock application; it is built with real OAuth integrations, real GraphQL/REST API fetching, and strict architectural boundaries. It is designed to be a technical showcase for frontend engineering interviews.
 
