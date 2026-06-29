@@ -4,62 +4,11 @@ Meridian is a production-ready Next.js application designed to demonstrate senio
 
 This project is not a typical mock application; it is built with real OAuth integrations, real GraphQL/REST API fetching, and strict architectural boundaries. It is designed to be a technical showcase for frontend engineering interviews.
 
-## Features
-
-- **Real GitHub OAuth Authentication**: Implemented via NextAuth.js (Auth.js), proving real-world session management capabilities without relying on mock JWTs.
-- **GitHub GraphQL Integration**: The dashboard fetches real-time repository and contribution statistics using the live GitHub GraphQL API.
-- **GitHub REST API Integration**: The users table demonstrates server-side pagination and search using the GitHub REST API.
-- **Dual State Management**: 
-  - **Server State**: Managed strictly by TanStack React Query (caching, deduping, background refetching).
-  - **Client State**: Managed strictly by Redux Toolkit (theme switching, global snackbar notifications).
-- **Zod & React Hook Form**: Fully typed, accessible, and performant form validations.
-- **Feature-Sliced Design**: The `/src/features` directory isolates modules (Auth, Dashboard, Users) for high maintainability.
-
-## Tech Stack
-
-- **Framework**: Next.js (App Router)
-- **Language**: TypeScript (Strict Mode)
-- **Styling**: Material-UI (MUI v5) + Emotion
-- **Server State**: TanStack React Query v5
-- **Client State**: Redux Toolkit
-- **Authentication**: NextAuth.js (v4)
-- **Form Handling**: React Hook Form + Zod
-- **Networking**: Axios
-
-## Architectural Decisions & "Why?"
-
-### Why Next.js App Router?
-The App Router provides superior performance through Server Components and advanced routing patterns. While much of this application is heavily client-side (due to the interactive dashboard nature), Next.js provides the robust foundation needed for future SEO and server-rendered optimizations.
-
-### Why separate React Query and Redux?
-In legacy codebases, developers often dumped all API responses into Redux, causing massive boilerplate and performance bottlenecks. Here, we demonstrate the modern enterprise standard: **React Query owns the server state** (async data, caching), and **Redux strictly owns the global UI state** (synchronous data like the current theme or toast notifications). 
-
-### Why GitHub OAuth?
-Mock authentication (like hardcoded username/password) is insufficient for demonstrating real-world security concerns. NextAuth securely handles the OAuth handshake, token storage, and session validation, providing a truly production-grade authentication flow.
-
-## Getting Started
-
-### Prerequisites
-1. Node.js 20+
-2. A GitHub account
-3. A GitHub OAuth App (to get your Client ID and Secret)
-
-### Setup
-1. Clone the repository
-2. Run `npm install`
-3. Create a `.env.local` file in the root directory:
-```env
-NEXTAUTH_URL=http://localhost:3000
-NEXTAUTH_SECRET=generate_a_random_secure_string_here
-GITHUB_ID=your_github_oauth_client_id
-GITHUB_SECRET=your_github_oauth_client_secret
-```
-4. Run `npm run dev`
-5. Open `http://localhost:3000/login` and click **Sign in with GitHub**.
+## Project Architecture
+The application follows a Feature-first architecture (Feature-Sliced Design). Code is grouped by domain rather than technical type, ensuring that all components, hooks, and API calls related to a specific feature live together. This isolates concerns and scales well for large teams.
 
 ## Folder Structure
-
-```
+```text
 src/
 ├── app/                  # Next.js App Router (Layouts & Pages)
 ├── features/             # Feature-sliced modules (Auth, Dashboard, Users)
@@ -71,8 +20,47 @@ src/
 ├── lib/                  # Third-party configurations (Axios, React Query)
 ├── shared/               # Reusable UI components (Buttons, Inputs, Avatar)
 └── store/                # Redux store configuration and slices
+docs/                     # Architecture and AI documentation
 ```
 
-## Performance & Accessibility
-- **Bundle Size**: Heavy components like Modals and Dialogs are dynamically imported (`React.lazy` / `next/dynamic`) to keep the initial JS payload small.
-- **Accessibility**: All forms utilize proper `aria-` attributes, and color contrast ratios adhere to WCAG standards.
+## Authentication Flow
+We utilize NextAuth.js (Auth.js) for a secure, robust OAuth flow. The client authenticates via a third-party provider (e.g., GitHub), and the session is managed securely on the server. API requests use Axios interceptors to automatically attach session tokens, and route guards prevent unauthorized access to private pages.
+
+## Redux vs React Query
+We enforce a strict separation of state:
+- **Server State (React Query)**: Handles all asynchronous API data, caching, deduping, and background updates.
+- **Client State (Redux Toolkit)**: Strictly reserved for synchronous, global UI state (e.g., theme switching, global modals, toast notifications) that doesn't belong in a database.
+
+## API Layer
+The application uses a hybrid API approach:
+- **REST**: Utilized for standard CRUD operations and straightforward data fetching.
+- **GraphQL**: Used for complex, deeply nested data requirements to eliminate over-fetching.
+All requests are routed through Axios, configured with global interceptors for error handling and auth token injection.
+
+## Performance Strategy
+- **Code Splitting**: Heavy UI components (modals, complex charts) are dynamically imported (`next/dynamic`).
+- **Caching**: React Query aggressively caches server responses.
+- **Optimistic Updates**: UI reacts instantly to user input while background mutations complete.
+
+## SEO Strategy
+Next.js Server Components and dynamic metadata generation are leveraged to ensure that public-facing pages are fully indexable. Semantic HTML5 tags and proper heading hierarchies are enforced across all views.
+
+## Accessibility Strategy
+All interactive elements use appropriate `aria-` attributes. Color contrast ratios meet WCAG AA standards. Forms are navigable via keyboard, and focus management is handled for dynamic modal dialogs.
+
+## Testing Strategy
+- **Unit Tests**: Critical utilities and Redux reducers are tested in isolation.
+- **Integration Tests**: React Testing Library is used to test feature workflows and React Query hooks.
+- **Type Safety**: Strict TypeScript prevents runtime type errors before tests even run.
+
+## Engineering Decisions
+For a detailed breakdown of why specific technologies were chosen (e.g., Next.js, Zod, Oxlint), please see our [Engineering Decisions Document](docs/engineering-decisions.md).
+
+## Trade-offs
+- **Complexity vs. Boilerplate**: Redux and React Query together add initial setup complexity but drastically reduce technical debt as the app grows.
+- **MUI vs. Tailwind**: We use MUI for rapid, accessible component composition, which increases bundle size slightly compared to a pure Tailwind approach, but ensures enterprise-grade accessibility out-of-the-box.
+
+## Future Improvements
+- Implement comprehensive e2e testing with Playwright.
+- Migrate to Next.js partial pre-rendering for even faster initial loads.
+- Add internationalization (i18n) support.
