@@ -7,6 +7,7 @@ import { StatsCard } from './StatsCard';
 import { RecentActivity } from './RecentActivity';
 import { DashboardSkeleton } from './DashboardSkeleton';
 import { useDashboardData } from '../hooks/useDashboardData';
+import { NotificationPrompt } from '@/features/notifications/components/NotificationPrompt';
 
 export function DashboardPage() {
   const { data, isLoading, isError } = useDashboardData();
@@ -28,6 +29,8 @@ export function DashboardPage() {
         description="Your organization's pulse at a glance."
         breadcrumbs={[{ label: 'Meridian' }, { label: 'Dashboard' }]}
       />
+
+      <NotificationPrompt />
 
       <Grid container spacing={3} sx={{ mb: 4 }}>
         {data?.stats.map((stat) => (
