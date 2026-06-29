@@ -1,24 +1,18 @@
-export type UserStatus = 'active' | 'inactive' | 'pending';
-
-export interface User {
+export interface GitHubConnection {
   id: string;
-  name: string;
-  email: string;
-  role: 'admin' | 'manager' | 'employee';
-  department: string;
-  status: UserStatus;
-  avatarUrl: string | null;
-  joinedAt: string; // ISO 8601
-  manager: string | null;
+  login: string;
+  name: string | null;
+  avatarUrl: string;
+  url: string;
+  bio: string | null;
+  company: string | null;
+  location: string | null;
 }
 
-export interface CreateUserPayload {
-  name: string;
-  email: string;
-  role: User['role'];
-  department: string;
+export interface GitHubUserStats {
+  pullRequests: number;
+  commits: number;
+  issues: number;
 }
 
-export interface UpdateUserPayload extends Partial<CreateUserPayload> {
-  status?: UserStatus;
-}
+export type ConnectionType = 'followers' | 'following';

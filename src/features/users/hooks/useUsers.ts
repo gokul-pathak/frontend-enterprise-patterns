@@ -1,12 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import { getUsers, type UsersQueryParams } from '../api/usersService';
+import { getConnections, type ConnectionsQueryParams } from '../api/usersService';
 
-export const usersQueryKey = (params: UsersQueryParams) => ['users', params] as const;
+export const USERS_QUERY_KEY = ['connections'] as const;
 
-export function useUsers(params: UsersQueryParams) {
+export function useConnections(params: ConnectionsQueryParams) {
   return useQuery({
-    queryKey: usersQueryKey(params),
-    queryFn: () => getUsers(params),
-    placeholderData: (prev) => prev, // Keep old data visible while new page loads
+    queryKey: [...USERS_QUERY_KEY, params],
+    queryFn: () => getConnections(params),
+    placeholderData: (prev) => prev,
   });
 }
