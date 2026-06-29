@@ -10,6 +10,7 @@ import { store, useAppSelector } from '@/store';
 import { queryClient } from '@/lib/queryClient';
 import { GlobalSnackbar } from '@/shared/components/Snackbar';
 import { AuthInitializer } from './AuthInitializer';
+import { MSWProvider } from './MSWProvider';
 
 /**
  * Composition root for all app-wide providers.
@@ -23,15 +24,17 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <ReduxProvider store={store}>
       <QueryClientProvider client={queryClient}>
-        <AuthInitializer />
-        <MuiThemeProvider>
-          <CssBaseline />
-          {children}
-          <GlobalSnackbar />
-        </MuiThemeProvider>
-        {process.env.NODE_ENV === 'development' && (
-          <ReactQueryDevtools initialIsOpen={false} />
-        )}
+        <MSWProvider>
+          <AuthInitializer />
+          <MuiThemeProvider>
+            <CssBaseline />
+            {children}
+            <GlobalSnackbar />
+          </MuiThemeProvider>
+          {process.env.NODE_ENV === 'development' && (
+            <ReactQueryDevtools initialIsOpen={false} />
+          )}
+        </MSWProvider>
       </QueryClientProvider>
     </ReduxProvider>
   );
