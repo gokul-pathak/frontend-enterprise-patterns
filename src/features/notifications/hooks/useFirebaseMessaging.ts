@@ -19,25 +19,41 @@ export function useFirebaseMessaging() {
   const dispatch = useAppDispatch();
 
   const enableNotifications = useCallback(async () => {
-    const token = await requestNotificationPermission();
-    
-    // Even if token generation fails (e.g. Firebase not configured),
-    // we still want the demo UI to reflect the granted permission.
-    if (Notification.permission === 'granted') {
-      if (token) {
-        // Register token with backend
-        try {
-          await apiClient.post('/push/register', { token, platform: 'web' });
-        } catch {
-          // Non-fatal — the app works without push
-        }
+    try {
+      if (!('Notification' in window)) {
+        dispatch(enqueueNotification({ message: 'Browser does not support notifications.', severity: 'error' }));
+        return false;
       }
+
+      const token = await requestNotificationPermission();
       
+      if (Notification.permission === 'granted') {
+        if (token) {
+          try {
+            await apiClient.post('/push/register', { token, platform: 'web' });
+          } catch {
+            // Non-fatal
+          }
+        }
+        
+        dispatch(enqueueNotification({
+          message: token ? 'Push notifications enabled.' : 'Notification permission granted (Firebase not configured).',
+          severity: 'success',
+        }));
+        return true;
+      } else if (Notification.permission === 'denied') {
+        dispatch(enqueueNotification({
+          message: 'Notification permission was denied by the browser.',
+          severity: 'error',
+        }));
+      }
+    } catch (error) {
       dispatch(enqueueNotification({
-        message: token ? 'Push notifications enabled.' : 'Notification permission granted (Firebase not configured).',
-        severity: 'success',
+        message: 'Failed to request notification permission.',
+        severity: 'error',
       }));
     }
+    return false;
   }, [dispatch]);
 
   // Subscribe to foreground messages (app is open and focused)

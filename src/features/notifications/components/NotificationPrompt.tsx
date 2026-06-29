@@ -20,8 +20,10 @@ export function NotificationPrompt() {
   }, []);
 
   const handleEnable = async () => {
-    await enableNotifications();
-    setShowPrompt(false);
+    const success = await enableNotifications();
+    if (success) {
+      setShowPrompt(false);
+    }
   };
 
   if (!showPrompt) return null;

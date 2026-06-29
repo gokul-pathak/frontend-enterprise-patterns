@@ -42,6 +42,26 @@ function getFirebaseMessaging(): Messaging | null {
 }
 
 /**
+ * Safely requests notification permission, handling both Promise and Callback APIs.
+ */
+async function getNotificationPermission(): Promise<NotificationPermission> {
+  if (!('Notification' in window)) return 'denied';
+  
+  return new Promise((resolve) => {
+    try {
+      const result = Notification.requestPermission((permission) => {
+        resolve(permission);
+      });
+      if (result && typeof result.then === 'function') {
+        result.then(resolve).catch(() => resolve('denied'));
+      }
+    } catch {
+      resolve('denied');
+    }
+  });
+}
+
+/**
  * Requests notification permission and returns the FCM registration token.
  * Call this after a user gesture (button click) — browsers block permission prompts
  * that are not triggered by user interaction.
@@ -50,7 +70,7 @@ export async function requestNotificationPermission(): Promise<string | null> {
   try {
     // Request permission first so the browser prompt always appears,
     // even if Firebase isn't configured with env vars yet.
-    const permission = await Notification.requestPermission();
+    const permission = await getNotificationPermission();
     if (permission !== 'granted') return null;
 
     const messaging = getFirebaseMessaging();
