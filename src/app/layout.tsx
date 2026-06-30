@@ -11,8 +11,7 @@ export const metadata: Metadata = {
     default: 'GitHub Stats',
     template: '%s | GitHub Stats',
   },
-  description:
-    'GitHub Stats is a platform for viewing GitHub activity.',
+  description: 'GitHub Stats is a platform for viewing GitHub activity.',
   keywords: ['HR', 'people operations', 'team management', 'performance'],
   authors: [{ name: 'GitHub Stats Engineering' }],
   alternates: {

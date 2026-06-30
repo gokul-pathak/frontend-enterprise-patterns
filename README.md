@@ -46,9 +46,9 @@ When the app scales, a developer working on "users" only touches `features/users
 
 ### State Management Strategy
 
-| State Type | Tool | Example |
-|---|---|---|
-| Server/async data | React Query | Dashboard stats, GitHub connections |
+| State Type           | Tool          | Example                               |
+| -------------------- | ------------- | ------------------------------------- |
+| Server/async data    | React Query   | Dashboard stats, GitHub connections   |
 | Client/sync UI state | Redux Toolkit | Theme mode, notes CRUD, notifications |
 
 React Query handles caching, background sync, and deduplication for API data. Redux is strictly for global UI state that doesn't belong in a database. Using both avoids stale state bugs that happen when Redux manages API data.
@@ -83,15 +83,16 @@ src/
 │   ├── integration/
 │   └── utils/
 └── types/                  # Global TypeScript interfaces
-docs/                       # Engineering decisions and AI workflow documentation
 ```
 
 ## Key Patterns
 
 ### Form Validation
+
 Every form uses React Hook Form with Zod schema validation. Zod infers TypeScript types directly from schemas, so the validation rules and the types never drift apart.
 
 ### Error Handling
+
 - `error.tsx` — catches UI errors per route segment
 - `global-error.tsx` — fallback for fatal application crashes
 - `not-found.tsx` — custom 404 page
@@ -99,12 +100,15 @@ Every form uses React Hook Form with Zod schema validation. Zod infers TypeScrip
 - Retry UI on failed API requests via React Query's `refetch()`
 
 ### SEO
+
 Uses the Next.js Metadata API for title, description, canonical URLs, Open Graph, Twitter Cards, and robots config. JSON-LD structured data is injected for search engine context.
 
 ### Accessibility
+
 Skip-to-content link for keyboard users. MUI components handle `aria-describedby` and `aria-invalid` natively. All interactive buttons have explicit `aria-label` attributes.
 
 ### Performance
+
 - `useMemo` for expensive computations (DataGrid column definitions)
 - `useCallback` for stable event handler references
 - `next/dynamic` for lazy-loading heavy components
@@ -119,16 +123,16 @@ npm run dev
 
 ## Available Scripts
 
-| Command | Description |
-|---|---|
-| `npm run dev` | Start development server |
-| `npm run build` | Production build |
-| `npm run lint` | Run ESLint |
-| `npm run lint:oxlint` | Run Oxlint (fast linter) |
-| `npm run type-check` | TypeScript type checking |
-| `npm run test` | Run tests with Vitest |
-| `npm run test:watch` | Run tests in watch mode |
-| `npm run coverage` | Generate test coverage report |
+| Command               | Description                   |
+| --------------------- | ----------------------------- |
+| `npm run dev`         | Start development server      |
+| `npm run build`       | Production build              |
+| `npm run lint`        | Run ESLint                    |
+| `npm run lint:oxlint` | Run Oxlint (fast linter)      |
+| `npm run type-check`  | TypeScript type checking      |
+| `npm run test`        | Run tests with Vitest         |
+| `npm run test:watch`  | Run tests in watch mode       |
+| `npm run coverage`    | Generate test coverage report |
 
 ## Notes
 

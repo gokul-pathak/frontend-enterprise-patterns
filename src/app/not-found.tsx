@@ -18,7 +18,7 @@ export default function NotFound() {
         bgcolor: 'background.default',
       }}
     >
-      <Typography variant="h1" sx={{ fontWeight: 800, color: "primary.main" }}>
+      <Typography variant="h1" sx={{ fontWeight: 800, color: 'primary.main' }}>
         404
       </Typography>
       <Typography variant="h5" sx={{ fontWeight: 600 }}>
