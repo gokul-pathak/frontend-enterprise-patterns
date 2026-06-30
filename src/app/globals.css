@@ -17,8 +17,8 @@ body {
 }
 
 /* Prevent Tailwind preflight from applying double outlines to MUI inputs */
-input:focus, 
-textarea:focus, 
+input:focus,
+textarea:focus,
 select:focus,
 .MuiInputBase-input:focus {
   outline: none !important;

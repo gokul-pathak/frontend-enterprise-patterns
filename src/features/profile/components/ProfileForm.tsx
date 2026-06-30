@@ -3,15 +3,7 @@
 import { useEffect } from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import {
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  Divider,
-  Box,
-} from '@mui/material';
-
+import { Grid, Card, CardContent, Typography, Divider, Box } from '@mui/material';
 
 import { Input } from '@/shared/components/Input';
 import { Button } from '@/shared/components/Button';
@@ -147,7 +139,11 @@ export function ProfileForm({ defaultValues, onSubmit, isSubmitting }: ProfileFo
                     multiline
                     rows={3}
                     errorMessage={errors.bio?.message}
-                    helperText={!errors.bio?.message ? 'A brief introduction visible to your team.' : undefined}
+                    helperText={
+                      !errors.bio?.message
+                        ? 'A brief introduction visible to your team.'
+                        : undefined
+                    }
                   />
                 )}
               />
@@ -189,7 +185,11 @@ export function ProfileForm({ defaultValues, onSubmit, isSubmitting }: ProfileFo
                 name="address.state"
                 control={control}
                 render={({ field }) => (
-                  <Input {...field} label="State / Province" errorMessage={errors.address?.state?.message} />
+                  <Input
+                    {...field}
+                    label="State / Province"
+                    errorMessage={errors.address?.state?.message}
+                  />
                 )}
               />
             </Grid>
@@ -198,7 +198,11 @@ export function ProfileForm({ defaultValues, onSubmit, isSubmitting }: ProfileFo
                 name="address.country"
                 control={control}
                 render={({ field }) => (
-                  <Input {...field} label="Country" errorMessage={errors.address?.country?.message} />
+                  <Input
+                    {...field}
+                    label="Country"
+                    errorMessage={errors.address?.country?.message}
+                  />
                 )}
               />
             </Grid>
@@ -207,7 +211,11 @@ export function ProfileForm({ defaultValues, onSubmit, isSubmitting }: ProfileFo
                 name="address.postalCode"
                 control={control}
                 render={({ field }) => (
-                  <Input {...field} label="Postal code" errorMessage={errors.address?.postalCode?.message} />
+                  <Input
+                    {...field}
+                    label="Postal code"
+                    errorMessage={errors.address?.postalCode?.message}
+                  />
                 )}
               />
             </Grid>

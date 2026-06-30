@@ -58,14 +58,14 @@ export const notesSlice = createSlice({
       saveNotesToStorage(state.items);
     },
     updateNote: (state, action: PayloadAction<Note>) => {
-      const index = state.items.findIndex(n => n.id === action.payload.id);
+      const index = state.items.findIndex((n) => n.id === action.payload.id);
       if (index !== -1) {
         state.items[index] = action.payload;
         saveNotesToStorage(state.items);
       }
     },
     deleteNote: (state, action: PayloadAction<string>) => {
-      state.items = state.items.filter(n => n.id !== action.payload);
+      state.items = state.items.filter((n) => n.id !== action.payload);
       saveNotesToStorage(state.items);
     },
   },

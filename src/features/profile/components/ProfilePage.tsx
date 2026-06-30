@@ -12,7 +12,12 @@ import type { ProfileFormValues } from '../schemas/profileSchema';
 
 export function ProfilePage() {
   const dispatch = useAppDispatch();
-  const { data: profile, isLoading, isSaving, error: isError } = useAppSelector((state) => state.profile);
+  const {
+    data: profile,
+    isLoading,
+    isSaving,
+    error: isError,
+  } = useAppSelector((state) => state.profile);
 
   useEffect(() => {
     // Only fetch if we don't have data, or if you want to always refetch on mount.
@@ -71,11 +76,7 @@ export function ProfilePage() {
         </Box>
       ) : (
         profile && (
-          <ProfileForm
-            defaultValues={profile}
-            onSubmit={handleSubmit}
-            isSubmitting={isSaving}
-          />
+          <ProfileForm defaultValues={profile} onSubmit={handleSubmit} isSubmitting={isSaving} />
         )
       )}
     </div>

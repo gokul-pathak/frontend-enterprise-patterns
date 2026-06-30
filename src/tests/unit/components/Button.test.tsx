@@ -10,7 +10,11 @@ describe('Button', () => {
   });
 
   it('shows loading spinner and loading text when isLoading is true', () => {
-    render(<Button isLoading loadingText="Saving…">Save</Button>);
+    render(
+      <Button isLoading loadingText="Saving…">
+        Save
+      </Button>,
+    );
     // The loading text replaces children
     expect(screen.getByText('Saving…')).toBeInTheDocument();
     // Spinner is present (aria-hidden to not duplicate the text in screen reader)
@@ -39,7 +43,11 @@ describe('Button', () => {
   it('does not call onClick when disabled', async () => {
     const user = userEvent.setup();
     const handleClick = vi.fn();
-    render(<Button disabled onClick={handleClick}>Click me</Button>);
+    render(
+      <Button disabled onClick={handleClick}>
+        Click me
+      </Button>,
+    );
     expect(screen.getByRole('button')).toBeDisabled();
   });
 });

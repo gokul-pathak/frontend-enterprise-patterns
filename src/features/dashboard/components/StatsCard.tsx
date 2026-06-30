@@ -2,7 +2,11 @@
 
 import { memo } from 'react';
 import { Card, CardContent, Typography, Box, Chip } from '@mui/material';
-import { TrendingUp as TrendingUpIcon, TrendingDown as TrendingDownIcon, TrendingFlat as TrendingFlatIcon } from '@mui/icons-material';
+import {
+  TrendingUp as TrendingUpIcon,
+  TrendingDown as TrendingDownIcon,
+  TrendingFlat as TrendingFlatIcon,
+} from '@mui/icons-material';
 
 import type { DashboardStat } from '../types/dashboard.types';
 

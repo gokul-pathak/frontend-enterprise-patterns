@@ -1,6 +1,19 @@
 'use client';
 
-import { Box, Drawer, List, ListItem, ListItemButton, ListItemIcon, ListItemText, AppBar, Toolbar, Typography, IconButton, Divider } from '@mui/material';
+import {
+  Box,
+  Drawer,
+  List,
+  ListItem,
+  ListItemButton,
+  ListItemIcon,
+  ListItemText,
+  AppBar,
+  Toolbar,
+  Typography,
+  IconButton,
+  Divider,
+} from '@mui/material';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PeopleIcon from '@mui/icons-material/People';
 import PersonIcon from '@mui/icons-material/Person';
@@ -128,7 +141,11 @@ function DashboardShell({ children }: { children: React.ReactNode }) {
           </Toolbar>
         </AppBar>
 
-        <Box id="main-content" component="main" sx={{ flex: 1, p: 3, bgcolor: 'background.default' }}>
+        <Box
+          id="main-content"
+          component="main"
+          sx={{ flex: 1, p: 3, bgcolor: 'background.default' }}
+        >
           {children}
         </Box>
       </Box>

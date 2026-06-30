@@ -41,22 +41,22 @@ export function NoteForm({ initialValues, onSubmit, onCancel, isEditing }: NoteF
   };
 
   return (
-    <Box component="form" onSubmit={handleSubmit(submitAndReset)} noValidate sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+    <Box
+      component="form"
+      onSubmit={handleSubmit(submitAndReset)}
+      noValidate
+      sx={{ display: 'flex', flexDirection: 'column', gap: 2 }}
+    >
       <Typography variant="h6">{isEditing ? 'Edit Note' : 'Create Note'}</Typography>
-      
+
       <Controller
         name="title"
         control={control}
         render={({ field }) => (
-          <Input
-            {...field}
-            label="Title"
-            required
-            errorMessage={errors.title?.message}
-          />
+          <Input {...field} label="Title" required errorMessage={errors.title?.message} />
         )}
       />
-      
+
       <Controller
         name="content"
         control={control}
@@ -71,7 +71,7 @@ export function NoteForm({ initialValues, onSubmit, onCancel, isEditing }: NoteF
           />
         )}
       />
-      
+
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 1 }}>
         {onCancel && (
           <Button variant="outlined" onClick={onCancel}>

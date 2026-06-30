@@ -64,7 +64,9 @@ export function ConnectionDetailModal({ connection, open, onClose }: ConnectionD
             <CircularProgress />
           </Box>
         ) : stats ? (
-          <Box sx={{ display: 'flex', gap: 4, justifyContent: 'space-around', textAlign: 'center' }}>
+          <Box
+            sx={{ display: 'flex', gap: 4, justifyContent: 'space-around', textAlign: 'center' }}
+          >
             <Box>
               <Typography variant="h4" color="primary.main" sx={{ fontWeight: 700 }}>
                 {stats.pullRequests}

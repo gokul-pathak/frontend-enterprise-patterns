@@ -16,17 +16,18 @@ export function LoginForm() {
 
   const handleDemoLogin = async () => {
     setIsLoading(true);
-    await signIn('credentials', { 
-      username: 'admin', 
-      password: 'password', 
-      callbackUrl: '/dashboard' 
+    await signIn('credentials', {
+      username: 'admin',
+      password: 'password',
+      callbackUrl: '/dashboard',
     });
   };
 
   return (
     <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', gap: 3 }}>
       <Typography variant="body1" color="text.secondary" sx={{ textAlign: 'center', mb: 2 }}>
-        Sign in with your GitHub account to access the dashboard and view your real GitHub statistics.
+        Sign in with your GitHub account to access the dashboard and view your real GitHub
+        statistics.
       </Typography>
 
       <Button

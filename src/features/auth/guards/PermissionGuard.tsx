@@ -21,13 +21,9 @@ interface PermissionGuardProps {
  *     <DeleteUserButton />
  *   </PermissionGuard>
  */
-export function PermissionGuard({
-  children,
-  allowedRoles,
-  fallback = null,
-}: PermissionGuardProps) {
+export function PermissionGuard({ children, allowedRoles, fallback = null }: PermissionGuardProps) {
   const { data: session } = useSession();
-  
+
   // For portfolio purposes, all GitHub OAuth users are granted 'admin' access
   // so they can see all UI elements.
   const userRole: UserRole = session?.user ? 'admin' : 'employee';

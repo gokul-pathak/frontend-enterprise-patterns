@@ -40,7 +40,13 @@ export async function getProfile(): Promise<UserProfile> {
     department: 'Engineering',
     jobTitle: 'Admin',
     avatarUrl: session?.user?.image || 'https://avatars.githubusercontent.com/u/9919?v=4',
-    address: { street: '123 Tech Lane', city: 'San Francisco', state: 'CA', country: 'USA', postalCode: '94105' },
+    address: {
+      street: '123 Tech Lane',
+      city: 'San Francisco',
+      state: 'CA',
+      country: 'USA',
+      postalCode: '94105',
+    },
     linkedIn: 'https://linkedin.com/in/demo',
     github: 'https://github.com/demo',
   };
@@ -49,7 +55,7 @@ export async function getProfile(): Promise<UserProfile> {
 export async function updateProfile(payload: UpdateProfilePayload): Promise<UserProfile> {
   // Simulate API update delay
   await new Promise((resolve) => setTimeout(resolve, 500));
-  
+
   // Return the merged profile (mock update)
   const current = await getProfile();
   return { ...current, ...payload };

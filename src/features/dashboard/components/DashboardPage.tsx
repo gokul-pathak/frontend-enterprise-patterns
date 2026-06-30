@@ -9,7 +9,7 @@ import { DashboardSkeleton } from './DashboardSkeleton';
 import { useDashboardData } from '../hooks/useDashboardData';
 import dynamic from 'next/dynamic';
 
-const RecentActivity = dynamic(() => import('./RecentActivity').then(mod => mod.RecentActivity), {
+const RecentActivity = dynamic(() => import('./RecentActivity').then((mod) => mod.RecentActivity), {
   loading: () => <DashboardSkeleton />,
 });
 
@@ -20,7 +20,9 @@ export function DashboardPage() {
 
   if (isError) {
     return (
-      <Box sx={{ mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 2 }}>
+      <Box
+        sx={{ mt: 2, display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 2 }}
+      >
         <Alert severity="error" sx={{ width: '100%' }}>
           Failed to load dashboard data. Please check your connection.
         </Alert>
@@ -66,7 +68,8 @@ export function DashboardPage() {
                 Quick Stats
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {data?.stats.length} metrics tracked across {data?.recentActivity.length} recent events.
+                {data?.stats.length} metrics tracked across {data?.recentActivity.length} recent
+                events.
               </Typography>
             </CardContent>
           </Card>

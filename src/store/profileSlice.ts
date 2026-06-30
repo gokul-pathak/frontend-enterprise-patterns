@@ -27,7 +27,7 @@ export const fetchProfile = createAsyncThunk(
     } catch (error: any) {
       return rejectWithValue(error.message || 'Failed to fetch profile');
     }
-  }
+  },
 );
 
 // Async Thunk for saving the profile
@@ -36,13 +36,17 @@ export const saveProfile = createAsyncThunk(
   async (payload: UpdateProfilePayload, { dispatch, rejectWithValue }) => {
     try {
       const updatedProfile = await updateProfile(payload);
-      dispatch(enqueueNotification({ message: 'Profile updated successfully.', severity: 'success' }));
+      dispatch(
+        enqueueNotification({ message: 'Profile updated successfully.', severity: 'success' }),
+      );
       return updatedProfile;
     } catch (error: any) {
-      dispatch(enqueueNotification({ message: 'Failed to save profile changes.', severity: 'error' }));
+      dispatch(
+        enqueueNotification({ message: 'Failed to save profile changes.', severity: 'error' }),
+      );
       return rejectWithValue(error.message || 'Failed to save profile');
     }
-  }
+  },
 );
 
 export const profileSlice = createSlice({
@@ -52,7 +56,7 @@ export const profileSlice = createSlice({
     // We can add synchronous reducers here if needed
     clearProfile: (state) => {
       state.data = null;
-    }
+    },
   },
   extraReducers: (builder) => {
     // fetchProfile cases

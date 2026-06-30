@@ -49,12 +49,12 @@ export async function getConnections(params: ConnectionsQueryParams): Promise<Gi
         variables: {
           login,
           first: params.first,
-        }
+        },
       });
-      
+
       const user = data.data.user;
       if (!user) return [];
-      
+
       const nodes = params.type === 'followers' ? user.followers.nodes : user.following.nodes;
       return nodes;
     } catch {
@@ -83,7 +83,7 @@ export async function getConnections(params: ConnectionsQueryParams): Promise<Gi
       bio: 'Open Source Maintainer',
       company: null,
       location: 'New York',
-    }
+    },
   ];
 }
 
@@ -110,12 +110,12 @@ export async function getConnectionStats(login: string): Promise<GitHubUserStats
     try {
       const { data } = await apiClient.post('https://api.github.com/graphql', {
         query: STATS_QUERY,
-        variables: { login }
+        variables: { login },
       });
-      
+
       const user = data?.data?.user;
       if (!user) return null;
-      
+
       return {
         pullRequests: user.pullRequests?.totalCount || 0,
         commits: user.contributionsCollection?.totalCommitContributions || 0,

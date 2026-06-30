@@ -10,7 +10,10 @@ const addressSchema = z.object({
 
 export const profileSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters').max(80),
-  phone: z.string().regex(/^\+?[\d\s\-()]{7,20}$/, 'Please enter a valid phone number').or(z.literal('')),
+  phone: z
+    .string()
+    .regex(/^\+?[\d\s\-()]{7,20}$/, 'Please enter a valid phone number')
+    .or(z.literal('')),
   bio: z.string().max(500, 'Bio cannot exceed 500 characters'),
   department: z.string().min(1, 'Department is required'),
   jobTitle: z.string().min(1, 'Job title is required'),

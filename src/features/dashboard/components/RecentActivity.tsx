@@ -13,7 +13,12 @@ interface RecentActivityProps {
 
 export function RecentActivity({ items }: RecentActivityProps) {
   if (items.length === 0) {
-    return <EmptyState title="No recent activity" description="Actions will appear here as your team works." />;
+    return (
+      <EmptyState
+        title="No recent activity"
+        description="Actions will appear here as your team works."
+      />
+    );
   }
 
   return (
@@ -35,15 +40,31 @@ export function RecentActivity({ items }: RecentActivityProps) {
                 <Typography variant="body2" sx={{ fontWeight: 600 }}>
                   {item.userName}
                 </Typography>
-                <Chip label={item.action} size="small" variant="outlined" sx={{ height: 18, fontSize: '0.65rem' }} />
+                <Chip
+                  label={item.action}
+                  size="small"
+                  variant="outlined"
+                  sx={{ height: 18, fontSize: '0.65rem' }}
+                />
               </Box>
             }
             secondary={
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 0.25 }}>
+              <Box
+                sx={{
+                  display: 'flex',
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                  mt: 0.25,
+                }}
+              >
                 <Typography variant="body2" color="text.secondary">
                   {item.target}
                 </Typography>
-                <Typography variant="caption" color="text.disabled" sx={{ whiteSpace: 'nowrap', ml: 1 }}>
+                <Typography
+                  variant="caption"
+                  color="text.disabled"
+                  sx={{ whiteSpace: 'nowrap', ml: 1 }}
+                >
                   {formatDistanceToNow(new Date(item.timestamp), { addSuffix: true })}
                 </Typography>
               </Box>

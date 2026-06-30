@@ -24,14 +24,7 @@ interface ModalProps {
  * Separating Modal from the content inside it follows the
  * "container vs. presentational" pattern — easier to test and reuse.
  */
-export function Modal({
-  open,
-  onClose,
-  title,
-  children,
-  actions,
-  maxWidth = 'sm',
-}: ModalProps) {
+export function Modal({ open, onClose, title, children, actions, maxWidth = 'sm' }: ModalProps) {
   return (
     <Dialog
       open={open}
@@ -47,12 +40,7 @@ export function Modal({
         <Typography variant="h6" component="span" sx={{ fontWeight: 600 }}>
           {title}
         </Typography>
-        <IconButton
-          aria-label="close modal"
-          onClick={onClose}
-          size="small"
-          sx={{ ml: 1 }}
-        >
+        <IconButton aria-label="close modal" onClick={onClose} size="small" sx={{ ml: 1 }}>
           <CloseIcon fontSize="small" />
         </IconButton>
       </DialogTitle>

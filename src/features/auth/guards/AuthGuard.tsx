@@ -21,7 +21,9 @@ export function AuthGuard({ children }: AuthGuardProps) {
 
   if (status === 'loading') {
     return (
-      <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+      <Box
+        sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}
+      >
         <CircularProgress />
       </Box>
     );

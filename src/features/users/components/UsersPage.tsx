@@ -1,15 +1,7 @@
 'use client';
 
 import { useState, useMemo, useCallback } from 'react';
-import {
-  Box,
-  Card,
-  CardContent,
-  Typography,
-  CircularProgress,
-  Tabs,
-  Tab,
-} from '@mui/material';
+import { Box, Card, CardContent, Typography, CircularProgress, Tabs, Tab } from '@mui/material';
 import { DataGrid, type GridColDef } from '@mui/x-data-grid';
 
 import { PageHeader } from '@/shared/components/PageHeader';
@@ -33,65 +25,72 @@ export function UsersPage() {
     setSelectedConnection(null);
   }, []);
 
-  const columns: GridColDef<GitHubConnection>[] = useMemo(() => [
-    {
-      field: 'name',
-      headerName: 'User',
-      flex: 1.5,
-      minWidth: 200,
-      renderCell: (params) => (
-        <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
-          <Avatar name={params.row.name || params.row.login} src={params.row.avatarUrl} size={32} />
-          <Box sx={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-            <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: 1.2, mb: 0.5 }} noWrap>
-              {params.row.name || params.row.login}
-            </Typography>
-            <Typography variant="caption" color="text.secondary" sx={{ lineHeight: 1.2 }} noWrap>
-              @{params.row.login}
-            </Typography>
+  const columns: GridColDef<GitHubConnection>[] = useMemo(
+    () => [
+      {
+        field: 'name',
+        headerName: 'User',
+        flex: 1.5,
+        minWidth: 200,
+        renderCell: (params) => (
+          <Box sx={{ display: 'flex', alignItems: 'center', gap: 1.5 }}>
+            <Avatar
+              name={params.row.name || params.row.login}
+              src={params.row.avatarUrl}
+              size={32}
+            />
+            <Box sx={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
+              <Typography variant="body2" sx={{ fontWeight: 500, lineHeight: 1.2, mb: 0.5 }} noWrap>
+                {params.row.name || params.row.login}
+              </Typography>
+              <Typography variant="caption" color="text.secondary" sx={{ lineHeight: 1.2 }} noWrap>
+                @{params.row.login}
+              </Typography>
+            </Box>
           </Box>
-        </Box>
-      ),
-    },
-    {
-      field: 'company',
-      headerName: 'Company',
-      flex: 1,
-      minWidth: 150,
-      valueGetter: (params, row) => row.company || '—',
-    },
-    {
-      field: 'location',
-      headerName: 'Location',
-      flex: 1,
-      minWidth: 120,
-      valueGetter: (params, row) => row.location || '—',
-    },
-    {
-      field: 'bio',
-      headerName: 'Bio',
-      flex: 2,
-      minWidth: 250,
-      valueGetter: (params, row) => row.bio || '—',
-    },
-    {
-      field: 'actions',
-      headerName: '',
-      width: 100,
-      sortable: false,
-      renderCell: (params) => (
-        <Button
-          size="small"
-          variant="text"
-          startIcon={<PersonIcon />}
-          onClick={() => setSelectedConnection(params.row)}
-          aria-label={`View ${params.row.name || params.row.login}`}
-        >
-          View
-        </Button>
-      ),
-    },
-  ], []);
+        ),
+      },
+      {
+        field: 'company',
+        headerName: 'Company',
+        flex: 1,
+        minWidth: 150,
+        valueGetter: (params, row) => row.company || '—',
+      },
+      {
+        field: 'location',
+        headerName: 'Location',
+        flex: 1,
+        minWidth: 120,
+        valueGetter: (params, row) => row.location || '—',
+      },
+      {
+        field: 'bio',
+        headerName: 'Bio',
+        flex: 2,
+        minWidth: 250,
+        valueGetter: (params, row) => row.bio || '—',
+      },
+      {
+        field: 'actions',
+        headerName: '',
+        width: 100,
+        sortable: false,
+        renderCell: (params) => (
+          <Button
+            size="small"
+            variant="text"
+            startIcon={<PersonIcon />}
+            onClick={() => setSelectedConnection(params.row)}
+            aria-label={`View ${params.row.name || params.row.login}`}
+          >
+            View
+          </Button>
+        ),
+      },
+    ],
+    [],
+  );
 
   return (
     <div>
@@ -103,8 +102,8 @@ export function UsersPage() {
 
       <Card elevation={0} sx={{ border: '1px solid', borderColor: 'divider' }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs 
-            value={connectionType} 
+          <Tabs
+            value={connectionType}
             onChange={(_, newValue) => setConnectionType(newValue)}
             aria-label="connection tabs"
             sx={{ px: 2 }}

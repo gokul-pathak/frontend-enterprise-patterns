@@ -28,12 +28,11 @@ export default function UnauthorizedPage() {
         Access Denied
       </Typography>
       <Typography variant="body1" color="text.secondary" sx={{ maxWidth: 400, mb: 2 }}>
-        You don't have the necessary permissions to access this resource. Please log in with an authorized account or return to the dashboard.
+        You don't have the necessary permissions to access this resource. Please log in with an
+        authorized account or return to the dashboard.
       </Typography>
       <Link href="/dashboard" passHref legacyBehavior>
-        <Button variant="contained">
-          Back to Dashboard
-        </Button>
+        <Button variant="contained">Back to Dashboard</Button>
       </Link>
     </Box>
   );

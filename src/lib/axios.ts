@@ -3,7 +3,7 @@ import { getSession } from 'next-auth/react';
 
 /**
  * Axios instance for all REST API calls.
- * 
+ *
  * Automatically attaches the NextAuth session accessToken to outgoing requests
  * if one exists.
  */

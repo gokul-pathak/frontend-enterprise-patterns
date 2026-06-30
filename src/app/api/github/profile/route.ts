@@ -56,9 +56,12 @@ export async function GET(request: Request) {
     }
 
     const json = await response.json();
-    
+
     if (json.errors) {
-      return NextResponse.json({ error: 'GitHub GraphQL error', details: json.errors }, { status: 400 });
+      return NextResponse.json(
+        { error: 'GitHub GraphQL error', details: json.errors },
+        { status: 400 },
+      );
     }
 
     return NextResponse.json({ user: json.data?.user ?? null });

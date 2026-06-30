@@ -27,12 +27,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
       <MuiButton ref={ref} disabled={disabled || isLoading} {...props}>
         {isLoading ? (
           <>
-            <CircularProgress
-              size={16}
-              color="inherit"
-              sx={{ mr: 1 }}
-              aria-hidden="true"
-            />
+            <CircularProgress size={16} color="inherit" sx={{ mr: 1 }} aria-hidden="true" />
             {loadingText ?? children}
           </>
         ) : (

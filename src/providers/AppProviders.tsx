@@ -34,10 +34,8 @@ export function AppProviders({ children }: { children: React.ReactNode }) {
               <GlobalSnackbar />
             </MuiThemeProvider>
           </AppRouterCacheProvider>
-          {process.env.NODE_ENV === 'development' && (
-          <ReactQueryDevtools initialIsOpen={false} />
-        )}
-      </QueryClientProvider>
+          {process.env.NODE_ENV === 'development' && <ReactQueryDevtools initialIsOpen={false} />}
+        </QueryClientProvider>
       </NextAuthProvider>
     </ReduxProvider>
   );
@@ -104,9 +102,7 @@ function MuiThemeProvider({ children }: { children: React.ReactNode }) {
   // We'll let it swap to avoid a blank screen, but MUI handles this reasonably well.
   return (
     <ThemeProvider theme={theme}>
-      <div style={{ visibility: mounted ? 'visible' : 'hidden' }}>
-        {children}
-      </div>
+      <div style={{ visibility: mounted ? 'visible' : 'hidden' }}>{children}</div>
     </ThemeProvider>
   );
 }

@@ -47,7 +47,14 @@ export function NotesPage() {
         breadcrumbs={[{ label: 'GitHub Stats' }, { label: 'Notes' }]}
       />
 
-      <Box sx={{ display: 'flex', flexDirection: { xs: 'column', md: 'row' }, gap: 4, alignItems: 'flex-start' }}>
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: { xs: 'column', md: 'row' },
+          gap: 4,
+          alignItems: 'flex-start',
+        }}
+      >
         <Box sx={{ width: { xs: '100%', md: '33.333%' }, position: 'sticky', top: 24 }}>
           <Card elevation={0} sx={{ border: '1px solid', borderColor: 'divider' }}>
             <CardContent>
@@ -65,38 +72,56 @@ export function NotesPage() {
           </Card>
         </Box>
 
-        <Box sx={{ width: { xs: '100%', md: '66.666%' }, display: 'flex', flexDirection: 'column', gap: 2 }}>
-            {!isInitialized && <Typography>Loading notes...</Typography>}
-            {isInitialized && notes.length === 0 && (
-              <Typography color="text.secondary">No notes yet. Create one on the left!</Typography>
-            )}
-            
-            {notes.map((note) => (
-              <Card key={note.id} elevation={0} sx={{ border: '1px solid', borderColor: 'divider' }}>
-                <CardContent sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
-                  <Box sx={{ pr: 2 }}>
-                    <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
-                      {note.title}
-                    </Typography>
-                    <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', mb: 2 }}>
-                      {note.content}
-                    </Typography>
-                    <Typography variant="caption" color="text.secondary">
-                      {new Date(note.createdAt).toLocaleString()}
-                    </Typography>
-                  </Box>
-                  <Box sx={{ display: 'flex', gap: 1 }}>
-                    <IconButton size="small" onClick={() => setEditingNote(note)} aria-label="Edit Note">
-                      <EditIcon fontSize="small" />
-                    </IconButton>
-                    <IconButton size="small" onClick={() => setDeletingNoteId(note.id)} color="error" aria-label="Delete Note">
-                      <DeleteIcon fontSize="small" />
-                    </IconButton>
-                  </Box>
-                </CardContent>
-              </Card>
-            ))}
-          </Box>
+        <Box
+          sx={{
+            width: { xs: '100%', md: '66.666%' },
+            display: 'flex',
+            flexDirection: 'column',
+            gap: 2,
+          }}
+        >
+          {!isInitialized && <Typography>Loading notes...</Typography>}
+          {isInitialized && notes.length === 0 && (
+            <Typography color="text.secondary">No notes yet. Create one on the left!</Typography>
+          )}
+
+          {notes.map((note) => (
+            <Card key={note.id} elevation={0} sx={{ border: '1px solid', borderColor: 'divider' }}>
+              <CardContent
+                sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}
+              >
+                <Box sx={{ pr: 2 }}>
+                  <Typography variant="h6" sx={{ fontWeight: 600, mb: 1 }}>
+                    {note.title}
+                  </Typography>
+                  <Typography variant="body2" sx={{ whiteSpace: 'pre-wrap', mb: 2 }}>
+                    {note.content}
+                  </Typography>
+                  <Typography variant="caption" color="text.secondary">
+                    {new Date(note.createdAt).toLocaleString()}
+                  </Typography>
+                </Box>
+                <Box sx={{ display: 'flex', gap: 1 }}>
+                  <IconButton
+                    size="small"
+                    onClick={() => setEditingNote(note)}
+                    aria-label="Edit Note"
+                  >
+                    <EditIcon fontSize="small" />
+                  </IconButton>
+                  <IconButton
+                    size="small"
+                    onClick={() => setDeletingNoteId(note.id)}
+                    color="error"
+                    aria-label="Delete Note"
+                  >
+                    <DeleteIcon fontSize="small" />
+                  </IconButton>
+                </Box>
+              </CardContent>
+            </Card>
+          ))}
+        </Box>
       </Box>
 
       <ConfirmDialog

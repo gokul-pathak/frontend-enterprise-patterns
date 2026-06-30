@@ -31,9 +31,7 @@ export interface GitHubUserProfile {
   };
 }
 
-export async function getGitHubUserProfile(
-  login: string,
-): Promise<GitHubUserProfile | null> {
+export async function getGitHubUserProfile(login: string): Promise<GitHubUserProfile | null> {
   try {
     const response = await fetch(`/api/github/profile?login=${encodeURIComponent(login)}`);
 
@@ -43,10 +41,11 @@ export async function getGitHubUserProfile(
 
     const json = (await response.json()) as { user?: GitHubUserProfile | null };
     return json.user ?? null;
-
-
   } catch (error) {
-    console.warn('GitHub API failed (likely rate limit or missing token). Falling back to mock data.', error);
+    console.warn(
+      'GitHub API failed (likely rate limit or missing token). Falling back to mock data.',
+      error,
+    );
     // Graceful fallback for portfolio/demo purposes
     return {
       login,

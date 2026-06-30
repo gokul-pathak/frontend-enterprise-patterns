@@ -17,6 +17,7 @@ The app runs on `http://localhost:3000`. Sign in with any demo credential from t
 Use the format: `<type>/<ticket-id>-<short-description>`
 
 Examples:
+
 - `feat/MRD-123-user-avatar-upload`
 - `fix/MRD-456-token-refresh-race-condition`
 - `refactor/MRD-789-profile-form-validation`
@@ -36,6 +37,7 @@ We follow [Conventional Commits](https://www.conventionalcommits.org/). Husky en
 Allowed types: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `revert`, `ci`
 
 Examples:
+
 ```
 feat(users): add bulk deactivation action
 fix(auth): handle refresh token race condition

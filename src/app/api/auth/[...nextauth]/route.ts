@@ -24,7 +24,7 @@ export const authOptions: NextAuthOptions = {
             name: 'Demo Admin',
             email: 'admin@meridian.io',
             image: 'https://avatars.githubusercontent.com/u/9919?v=4',
-            login: 'demo-admin'
+            login: 'demo-admin',
           };
         }
         return null;
