@@ -1,66 +1,135 @@
-# GitHub Stats - Enterprise Frontend Architecture Portfolio
+# Frontend Enterprise Patterns
 
-GitHub Stats is a production-ready Next.js application designed to demonstrate senior-level frontend engineering practices, scalable architecture, and modern toolchains.
+A frontend architecture showcase repo demonstrating reusable patterns, scalable component design, and maintainable React/Next.js/TypeScript structure.
 
-This project is not a typical mock application; it is built with real OAuth integrations, real GraphQL/REST API fetching, and strict architectural boundaries. It is designed to be a technical showcase for frontend engineering interviews.
+## Purpose
 
-## Project Architecture
-The application follows a Feature-first architecture (Feature-Sliced Design). Code is grouped by domain rather than technical type, ensuring that all components, hooks, and API calls related to a specific feature live together. This isolates concerns and scales well for large teams.
+This repository reflects how I approach frontend engineering in real projects: organizing code clearly, building reusable components, and keeping architecture scalable. It is built with real OAuth integrations, real GraphQL/REST API fetching, and strict architectural boundaries.
+
+## Tech Stack
+
+- **Framework**: Next.js 16 (App Router) with React 19
+- **Language**: TypeScript (Strict mode)
+- **Styling**: Material UI + Tailwind CSS
+- **Server State**: TanStack React Query
+- **Client State**: Redux Toolkit
+- **Forms**: React Hook Form + Zod validation
+- **HTTP**: Axios with interceptors
+- **API**: REST + GitHub GraphQL
+- **Auth**: NextAuth.js (OAuth)
+- **Testing**: Vitest + React Testing Library + MSW
+- **Linting**: Oxlint + ESLint + Prettier
+- **Git Hooks**: Husky + lint-staged + Commitlint (Conventional Commits)
+
+## What This Repo Demonstrates
+
+- Feature-first architecture (Bulletproof React pattern)
+- Reusable UI component library (`Button`, `Input`, `Avatar`, `Modal`, `ConfirmDialog`)
+- Strict separation of server state (React Query) vs client state (Redux)
+- Zod schema validation with React Hook Form integration
+- Axios interceptors for centralized auth and error handling
+- GitHub GraphQL API integration alongside REST
+- SEO with Next.js Metadata API, Open Graph, JSON-LD structured data
+- Accessibility: skip-to-content, aria-labels, keyboard navigation
+- Performance: `useMemo`, `useCallback`, `next/dynamic`, `next/image`
+- Global error handling with Error Boundaries, 404, 403 pages
+- Responsive design with MUI breakpoints and Tailwind utilities
+- Clean commit history following Conventional Commits
+
+## Architecture
+
+Code is organized by **feature domain** rather than technical type. Each feature owns its own components, hooks, API layer, and types. Shared UI and utilities live separately.
+
+### Why this matters
+
+When the app scales, a developer working on "users" only touches `features/users/`. They never accidentally break auth or notes. This is how enterprise teams organize frontend code.
+
+### State Management Strategy
+
+| State Type | Tool | Example |
+|---|---|---|
+| Server/async data | React Query | Dashboard stats, GitHub connections |
+| Client/sync UI state | Redux Toolkit | Theme mode, notes CRUD, notifications |
+
+React Query handles caching, background sync, and deduplication for API data. Redux is strictly for global UI state that doesn't belong in a database. Using both avoids stale state bugs that happen when Redux manages API data.
+
+### API Layer
+
+- **REST**: Standard CRUD operations via Axios with centralized interceptors
+- **GraphQL**: GitHub API for fetching deeply nested data (followers, repos, PRs, commits) to avoid over-fetching
 
 ## Folder Structure
-```text
+
+```
 src/
-├── app/                  # Next.js App Router (Layouts & Pages)
-├── features/             # Feature-sliced modules (Auth, Dashboard, Users)
-│   └── [feature]/
-│       ├── api/          # Axios service layer
-│       ├── components/   # Feature-specific UI
-│       ├── hooks/        # React Query hooks
-│       └── types/        # TypeScript interfaces
-├── lib/                  # Third-party configurations (Axios, React Query)
-├── shared/               # Reusable UI components (Buttons, Inputs, Avatar)
-└── store/                # Redux store configuration and slices
-docs/                     # Architecture and AI documentation
+├── app/                    # Next.js App Router (layouts, pages, error boundaries)
+│   ├── (auth)/             # Auth route group (login, unauthorized)
+│   ├── (dashboard)/        # Protected route group (dashboard, users, profile, notes)
+│   └── api/                # API routes (NextAuth)
+├── features/               # Feature-sliced modules
+│   ├── auth/               # Login form, AuthGuard, schemas
+│   ├── dashboard/          # Stats cards, recent activity, skeleton loaders
+│   ├── notes/              # CRUD notes with Redux + Zod validation
+│   ├── profile/            # Profile page with Redux state
+│   └── users/              # Connections list, detail modal, GraphQL hooks
+├── lib/                    # Third-party configs (Axios instance, React Query client)
+├── providers/              # App-level providers (MUI theme, Redux, React Query)
+├── shared/                 # Reusable UI components and hooks
+│   ├── components/         # Button, Input, Avatar, Modal, ConfirmDialog, etc.
+│   └── hooks/              # Shared custom hooks
+├── store/                  # Redux store, slices (theme, notes, profile, notifications)
+├── tests/                  # Unit and integration tests
+│   ├── unit/
+│   ├── integration/
+│   └── utils/
+└── types/                  # Global TypeScript interfaces
+docs/                       # Engineering decisions and AI workflow documentation
 ```
 
-## Authentication Flow
-We utilize NextAuth.js (Auth.js) for a secure, robust OAuth flow. The client authenticates via a third-party provider (e.g., GitHub), and the session is managed securely on the server. API requests use Axios interceptors to automatically attach session tokens, and route guards prevent unauthorized access to private pages.
+## Key Patterns
 
-## Redux vs React Query
-We enforce a strict separation of state:
-- **Server State (React Query)**: Handles all asynchronous API data, caching, deduping, and background updates.
-- **Client State (Redux Toolkit)**: Strictly reserved for synchronous, global UI state (e.g., theme switching, global modals, toast notifications) that doesn't belong in a database.
+### Form Validation
+Every form uses React Hook Form with Zod schema validation. Zod infers TypeScript types directly from schemas, so the validation rules and the types never drift apart.
 
-## API Layer
-The application uses a hybrid API approach:
-- **REST**: Utilized for standard CRUD operations and straightforward data fetching.
-- **GraphQL**: Used for complex, deeply nested data requirements to eliminate over-fetching.
-All requests are routed through Axios, configured with global interceptors for error handling and auth token injection.
+### Error Handling
+- `error.tsx` — catches UI errors per route segment
+- `global-error.tsx` — fallback for fatal application crashes
+- `not-found.tsx` — custom 404 page
+- `unauthorized/page.tsx` — custom 403 page
+- Retry UI on failed API requests via React Query's `refetch()`
 
-## Performance Strategy
-- **Code Splitting**: Heavy UI components (modals, complex charts) are dynamically imported (`next/dynamic`).
-- **Caching**: React Query aggressively caches server responses.
-- **Optimistic Updates**: UI reacts instantly to user input while background mutations complete.
+### SEO
+Uses the Next.js Metadata API for title, description, canonical URLs, Open Graph, Twitter Cards, and robots config. JSON-LD structured data is injected for search engine context.
 
-## SEO Strategy
-Next.js Server Components and dynamic metadata generation are leveraged to ensure that public-facing pages are fully indexable. Semantic HTML5 tags and proper heading hierarchies are enforced across all views.
+### Accessibility
+Skip-to-content link for keyboard users. MUI components handle `aria-describedby` and `aria-invalid` natively. All interactive buttons have explicit `aria-label` attributes.
 
-## Accessibility Strategy
-All interactive elements use appropriate `aria-` attributes. Color contrast ratios meet WCAG AA standards. Forms are navigable via keyboard, and focus management is handled for dynamic modal dialogs.
+### Performance
+- `useMemo` for expensive computations (DataGrid column definitions)
+- `useCallback` for stable event handler references
+- `next/dynamic` for lazy-loading heavy components
+- `next/image` for automatic image optimization (WebP, lazy loading)
 
-## Testing Strategy
-- **Unit Tests**: Critical utilities and Redux reducers are tested in isolation.
-- **Integration Tests**: React Testing Library is used to test feature workflows and React Query hooks.
-- **Type Safety**: Strict TypeScript prevents runtime type errors before tests even run.
+## How to Run
 
-## Engineering Decisions
-For a detailed breakdown of why specific technologies were chosen (e.g., Next.js, Zod, Oxlint), please see our [Engineering Decisions Document](docs/engineering-decisions.md).
+```bash
+npm install
+npm run dev
+```
 
-## Trade-offs
-- **Complexity vs. Boilerplate**: Redux and React Query together add initial setup complexity but drastically reduce technical debt as the app grows.
-- **MUI vs. Tailwind**: We use MUI for rapid, accessible component composition, which increases bundle size slightly compared to a pure Tailwind approach, but ensures enterprise-grade accessibility out-of-the-box.
+## Available Scripts
 
-## Future Improvements
-- Implement comprehensive e2e testing with Playwright.
-- Migrate to Next.js partial pre-rendering for even faster initial loads.
-- Add internationalization (i18n) support.
+| Command | Description |
+|---|---|
+| `npm run dev` | Start development server |
+| `npm run build` | Production build |
+| `npm run lint` | Run ESLint |
+| `npm run lint:oxlint` | Run Oxlint (fast linter) |
+| `npm run type-check` | TypeScript type checking |
+| `npm run test` | Run tests with Vitest |
+| `npm run test:watch` | Run tests in watch mode |
+| `npm run coverage` | Generate test coverage report |
+
+## Notes
+
+This repo is intended to show how I structure and scale frontend code in a professional environment. For detailed reasoning behind each technology choice, see [Engineering Decisions](docs/engineering-decisions.md).
